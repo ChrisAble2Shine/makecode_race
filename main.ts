@@ -2,8 +2,8 @@ namespace SpriteKind {
     export const lose = SpriteKind.create()
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (mySprite.vy == 0) {
-        mySprite.vy = -150
+    if (max.vy == 0) {
+        max.vy = -150
     }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, location) {
@@ -76,13 +76,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.lose, function (sprite, otherSpr
 let bee: Sprite = null
 let lose: Sprite = null
 let coin: Sprite = null
-let mySprite: Sprite = null
+let max: Sprite = null
 scene.setBackgroundColor(9)
-mySprite = sprites.create(assets.image`max`, SpriteKind.Player)
-controller.moveSprite(mySprite, 100, 0)
+max = sprites.create(assets.image`max`, SpriteKind.Player)
+controller.moveSprite(max, 100, 0)
 tiles.setCurrentTilemap(tilemap`level1`)
-mySprite.ay = 200
-scene.cameraFollowSprite(mySprite)
+max.ay = 200
+scene.cameraFollowSprite(max)
 for (let value of tiles.getTilesByType(assets.tile`myTile3`)) {
     coin = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -124,6 +124,12 @@ for (let value of tiles.getTilesByType(assets.tile`myTile6`)) {
         . . . . . . . 7 . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.lose)
-    tiles.placeOnTile(mySprite, value)
+    tiles.placeOnTile(max, value)
     tiles.setTileAt(value, assets.tile`transparency16`)
 }
+game.onUpdate(function () {
+    max.setImage(assets.image`max`)
+    if (max.vx < 0) {
+        max.image.flipX()
+    }
+})
