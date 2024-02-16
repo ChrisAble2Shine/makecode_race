@@ -9,66 +9,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherS
     info.changeScoreBy(1)
     sprites.destroy(otherSprite)
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.lose, function (sprite, otherSprite) {
-    bee = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Enemy)
-    animation.runImageAnimation(
-    lose,
-    [img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 1 1 . . . . . . . 
-        . . . . . . . 1 1 . . . . . . . 
-        . . . f f f f f f . . . . . . . 
-        . . . f 5 5 5 5 f . . . . . . . 
-        . . . f f f f f f . . . . . . . 
-        . . f f 5 f 5 f f f 5 5 . . . . 
-        . . f 5 5 f 5 5 5 f 5 5 . . . . 
-        . . f 5 5 f 5 f f f 5 5 . . . . 
-        . . f f f f f f . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `,img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 1 1 . . . . . . . 
-        . . . . . . . 1 1 . . . . . . . 
-        . . . f f f f f f . . . . . . . 
-        . . . f 5 5 5 5 f . . . . . . . 
-        . . . f f f f f f . . . . . . . 
-        . . f f 5 f 5 f f f 5 5 . . . . 
-        . . f 5 5 f 5 5 5 f 5 5 . . . . 
-        . . f 5 5 f 5 f f f 5 5 . . . . 
-        . . f f f f f f . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `],
-    500,
-    true
-    )
-})
 function startLevel () {
     if (current_level1 == 0) {
         tiles.setCurrentTilemap(tilemap`level1`)
@@ -103,33 +43,8 @@ function startLevel () {
         tiles.setTileAt(value, assets.tile`transparency16`)
         tiles.placeOnTile(coin, value)
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile6`)) {
-        lose = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . 4 4 . . . . . . . . . 
-            . . . . . 4 4 . . 4 4 . . . . . 
-            . . . . . 5 5 5 5 4 4 . . . . . 
-            . . . . . 5 2 2 5 4 4 . . . . . 
-            . . . 4 4 5 2 2 5 . . . . . . . 
-            . . . 4 4 5 5 5 5 4 4 . . . . . 
-            . . . . 4 4 7 7 4 4 4 . . . . . 
-            . . 7 7 7 7 7 7 7 7 7 7 . . . . 
-            . . . . 7 7 7 7 7 7 . . . . . . 
-            . . . . 7 7 7 7 7 7 . . . . . . 
-            . . . . . 7 7 7 7 . . . . . . . 
-            . . . . . . . 7 . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.lose)
-        tiles.placeOnTile(max, value)
-        tiles.setTileAt(value, assets.tile`transparency16`)
-    }
 }
 let coin: Sprite = null
-let lose: Sprite = null
-let bee: Sprite = null
-let mySprite: Sprite = null
 let max: Sprite = null
 let current_level1 = 0
 scene.setBackgroundColor(9)
@@ -257,8 +172,8 @@ scene.setBackgroundImage(img`
     `)
 current_level1 = 1
 max = sprites.create(assets.image`max`, SpriteKind.Player)
-controller.moveSprite(max, 100, 0)
-scene.cameraFollowSprite(mySprite)
+controller.moveSprite(max, 89, 0)
+effects.confetti.endScreenEffect()
 startLevel()
 game.onUpdate(function () {
     max.setImage(assets.image`max`)
